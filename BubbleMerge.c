@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include<stdlib.h>
 
-#include"utilidades.h"
+#include"BubbleMerge.h"
+#include"Utils.h"
 
 #define MAX_BUBBLE 50
 
@@ -79,11 +80,10 @@ void sort(int arr[], int n) {
     hybridMergeSort(arr, 0, n - 1);
 }
 
-void interfaceInternaBM(){
-	
-	sort(array, tamArray);
-}
 
+void interfaceBubbleMerge(){
+	
+}
 
 // Exemplo de uso
 //int main() {

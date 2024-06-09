@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include<time.h>
-#include "Utils.h"
 
 #define ELEMENTOS_POR_LINHA 15
 

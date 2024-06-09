@@ -1,3 +1,4 @@
 main.exe
 dados_desorganizados.txt
-dados_organizados.txt
+dados_ordenados.txt
+*.gch

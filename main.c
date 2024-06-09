@@ -1,15 +1,15 @@
-#include "BucketQuick.h"
-#include "Utils.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "Utils.h"
+#include "BucketQuick.h"
+#include "BubbleMerge.h"
 
 void menu() {
     int opcao;
 
     do {
         printf("\nAlgoritmos Hibridos:\n");
-        printf("1. Miguel\n");
+        printf("1. BubbleSort com MergeSort\n");
         printf("2. BucketSort com QuickSort\n");
         printf("3. Sair\n");
         printf("Opcao: ");
@@ -17,7 +17,7 @@ void menu() {
 
         switch(opcao) {
             case 1:
-                /*Miguel*/
+                interfaceBubbleMerge();
                 break;
             case 2:
                 menuBucketQuick();
