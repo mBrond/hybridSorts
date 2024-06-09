@@ -111,6 +111,7 @@ void ordenacaoInterna() {
         arr[i] = rand() % 100000; 
     }
 
+    /*
     printf("Array desorganizado:\n");
     for (i = 0; i < tam_array; i++) {
         printf("%05d ", arr[i]);
@@ -119,11 +120,13 @@ void ordenacaoInterna() {
         }
     }
     printf("\n");
+    */
 
     clock_t inicio = clock();
     BucketQuick(arr, tam_array, tam_bucket);
     clock_t fim = clock();
 
+    /*
     printf("\nArray organizado:\n");
     for (i = 0; i < tam_array; i++) {
         printf("%05d ", arr[i]);
@@ -132,6 +135,7 @@ void ordenacaoInterna() {
         }
     }
     printf("\n");
+    */
 
     double tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
     printf("Tempo de execucao da ordenacao interna: %.6f segundos\n", tempo_gasto);
