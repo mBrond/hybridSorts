@@ -165,14 +165,108 @@ void salvarArquivo(const char *nomeArquivo, int arr[], int tamanho) {
     fclose(arquivo);
 }
 
-void menu() {
-    int opcao;
+void ordenacaoInterna() {
+    int tam_array, tam_bucket, i;
+
+    printf("Digite o tamanho do array: ");
+    scanf("%d", &tam_array);
+
+    if (tam_array <= 0) {
+        printf("Tamanho invalido do array.\n");
+        return;
+    }
+
+    printf("Digite o tamanho do balde: ");
+    scanf("%d", &tam_bucket);
+
+    if (tam_bucket <= 0) {
+        printf("Tamanho invalido do balde.\n");
+        return;
+    }
+
+    int *arr = (int *)malloc(tam_array * sizeof(int));
+    if (arr == NULL) {
+        printf("Erro ao alocar memoria para o array.\n");
+        exit(1);
+    }
+
+    srand(time(NULL));
+    for (i = 0; i < tam_array; i++) {
+        arr[i] = rand() % 100000; 
+    }
+
+    printf("Array desorganizado:\n");
+    for (i = 0; i < tam_array; i++) {
+        printf("%05d ", arr[i]);
+        if ((i + 1) % ELEMENTOS_POR_LINHA == 0) {
+            printf("\n");
+        }
+    }
+    printf("\n");
+
+    clock_t inicio = clock();
+    BucketQuick(arr, tam_array, tam_bucket);
+    clock_t fim = clock();
+
+    printf("\nArray organizado:\n");
+    for (i = 0; i < tam_array; i++) {
+        printf("%05d ", arr[i]);
+        if ((i + 1) % ELEMENTOS_POR_LINHA == 0) {
+            printf("\n");
+        }
+    }
+    printf("\n");
+
+    double tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
+    printf("Tempo de execucao da ordenação interna: %.6f segundos\n", tempo_gasto);
+
+    free(arr);
+}
+
+void ordenacaoExterna() {
     int tam_array, tam_bucket;
     const char *nomeArquivoDesorganizado = "dados_desorganizados.txt";
     const char *nomeArquivoOrdenado = "dados_ordenados.txt";
-    
+
+    printf("Digite o tamanho do array: ");
+    scanf("%d", &tam_array);
+
+    if (tam_array <= 0) {
+        printf("Tamanho invalido do array.\n");
+        return;
+    }
+
+    printf("Digite o tamanho do balde: ");
+    scanf("%d", &tam_bucket);
+
+    if (tam_bucket <= 0) {
+        printf("Tamanho invalido do balde.\n");
+        return;
+    }
+
+    gerarArquivo(nomeArquivoDesorganizado, tam_array);
+
+    int *arr;
+    int tamanho = lerArquivo(nomeArquivoDesorganizado, &arr);
+
+    clock_t inicio = clock();
+    BucketQuick(arr, tamanho, tam_bucket);
+    clock_t fim = clock();
+
+    salvarArquivo(nomeArquivoOrdenado, arr, tamanho);
+
+    double tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
+    printf("Tempo de execucao da ordenacao externa: %.6f segundos\n", tempo_gasto);
+
+    free(arr);
+    printf("Os dados foram ordenados e salvos no arquivo '%s'.\n", nomeArquivoOrdenado);
+}
+
+void menu() {
+    int opcao;
+
     do {
-        printf("\nEscolha uma opcao:\n");
+        printf("\nBucketSort com QuickSort:\n");
         printf("1. Ordenacao interna\n");
         printf("2. Ordenacao externa\n");
         printf("3. Sair\n");
@@ -180,100 +274,14 @@ void menu() {
         scanf("%d", &opcao);
 
         switch(opcao) {
-            case 1:{
-                int i;
-                printf("Digite o tamanho do array: ");
-                scanf("%d", &tam_array);
-
-                if (tam_array <= 0) {
-                    printf("Tamanho invalido do array.\n");
-                    break;
-                }
-
-                printf("Digite o tamanho do balde: ");
-                scanf("%d", &tam_bucket);
-
-                if (tam_bucket <= 0) {
-                    printf("Tamanho invalido do balde.\n");
-                    break;
-                }
-
-                int *arr = (int *)malloc(tam_array * sizeof(int));
-                if (arr == NULL) {
-                    printf("Erro ao alocar memoria para o array.\n");
-                    exit(1);
-                }
-
-                srand(time(NULL));
-                for (i = 0; i < tam_array; i++) {
-                    arr[i] = rand() % 100000; 
-                }
-
-                printf("Array desorganizado:\n");
-                for (i = 0; i < tam_array; i++) {
-                    printf("%05d ", arr[i]);
-                    if ((i + 1) % ELEMENTOS_POR_LINHA == 0) {
-                        printf("\n");
-                    }
-                }
-                printf("\n");
-                clock_t inicio = clock();
-                BucketQuick(arr, tam_array, tam_bucket);
-                clock_t fim = clock();
-
-                printf("\nArray organizado:\n");
-                for (i = 0; i < tam_array; i++) {
-                    printf("%05d ", arr[i]);
-                    if ((i + 1) % ELEMENTOS_POR_LINHA == 0) {
-                        printf("\n");
-                    }
-                }
-                printf("\n");
-
-                double tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
-                printf("Tempo de execucao da ordenacao interna: %.6f segundos\n", tempo_gasto);
-
-                free(arr);
+            case 1:
+                ordenacaoInterna();
                 break;
-            }
-            case 2:{
-                printf("Digite o tamanho do array: ");
-                scanf("%d", &tam_array);
-
-                if (tam_array <= 0) {
-                    printf("Tamanho invalido do array.\n");
-                    break;
-                }
-
-                printf("Digite o tamanho do balde: ");
-                scanf("%d", &tam_bucket);
-
-                if (tam_bucket <= 0) {
-                    printf("Tamanho invalido do balde.\n");
-                    break;
-                }
-
-                gerarArquivo(nomeArquivoDesorganizado, tam_array);
-
-                int *arr;
-                int tamanho = lerArquivo(nomeArquivoDesorganizado, &arr);
-
-                clock_t inicio = clock();
-                BucketQuick(arr, tamanho, tam_bucket);
-                clock_t fim = clock();
-
-                salvarArquivo(nomeArquivoOrdenado, arr, tamanho);
-
-                double tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
-                printf("Tempo de execucao da ordenacao externa: %.6f segundos\n", tempo_gasto);
-
-                free(arr);
-                printf("Os dados foram ordenados e salvos no arquivo '%s'.\n", nomeArquivoOrdenado);
+            case 2:
+                ordenacaoExterna();
                 break;
-            }
-            case 3:{
+            case 3:
                 break;
-            }
             default:
                 printf("Opcao invalida. Tente novamente.\n");
         }
@@ -284,5 +292,3 @@ int main(){
     menu();
     return 0;
 }
-
-               
