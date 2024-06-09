@@ -246,11 +246,10 @@ void salvarArquivo(const char *nomeArquivo, int arr[], int tamanho) {
     fclose(arquivo);
 }
 
-void menu() {
+void menuBucketQuick() {
     int opcao;
 
     do {
-        printf("\nBucketSort com QuickSort:\n");
         printf("1. Ordenacao interna\n");
         printf("2. Ordenacao externa\n");
         printf("3. Sair\n");
@@ -271,9 +270,3 @@ void menu() {
         }
     } while (opcao != 3);
 }
-
-int main(){
-    menu();
-    return 0;
-}
-

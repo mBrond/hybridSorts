@@ -1,8 +1,9 @@
+#include "BucketQuick.h"
 #include<stdio.h>
 #include<stdlib.h>
 
-#include"BucketQuickSort.h"
 
+/*
 // Funcao para preencher um array com numeros inteiros aleatorios
 void dadosAleatorios(int arr[], int tamanho) {
     int i;
@@ -51,10 +52,37 @@ void usarQuickBucket(){
     printf("Array ordenado: ");
     imprimirArray(arr, tam_array);
 }
+*/
 
-//Menu de selecao
-void menu();
+
+/*Menu de selecao*/
+void menu() {
+    int opcao;
+
+    do {
+        printf("\nAlgoritmos Hibridos:\n");
+        printf("1. Miguel\n");
+        printf("2. BucketSort com QuickSort\n");
+        printf("3. Sair\n");
+        printf("Opcao: ");
+        scanf("%d", &opcao);
+
+        switch(opcao) {
+            case 1:
+                /*Miguel*/
+                break;
+            case 2:
+                menuBucketQuick();
+                break;
+            case 3:
+                break;
+            default:
+                printf("Opcao invalida. Tente novamente.\n");
+        }
+    } while (opcao != 3);
+}
 
 int main(){
-	usarQuickBucket();
+	menu();
+    return 0;
 }
