@@ -13,21 +13,30 @@ void ordenarBalde(int arr[], int tamanho) {
     qsort(arr, tamanho, sizeof(int), comparar);
 }
 
-void distribuirElementosNosBaldes(int **buckets, int *indices, int *arr, int n, int tam_bucket) {
-    int i;
-    for (i = 0; i < n; i++) {
+void liberarMemoriaBaldes(int **buckets, int *indices, int num_buckets) {
+    for (int i = 0; i < num_buckets; i++) {
+        free(buckets[i]);
+    }
+    free(buckets);
+    free(indices);
+}
+
+void distribuirElementosNosBaldes(int **buckets, int *indices, int *arr, int n, int tam_bucket, int num_buckets) {
+    for (int i = 0; i < n; i++) {
         int indice_bucket = arr[i] / tam_bucket;
         if (indices[indice_bucket] % tam_bucket == 0) {
             buckets[indice_bucket] = (int *)realloc(buckets[indice_bucket], (indices[indice_bucket] + tam_bucket) * sizeof(int));
             if (buckets[indice_bucket] == NULL) {
                 printf("Erro ao realocar memoria para um balde.\n");
-                liberarMemoriaBaldes(buckets, indices);
+                liberarMemoriaBaldes(buckets, indices, num_buckets);
+                free(arr);
                 exit(1);
             }
         }
         buckets[indice_bucket][indices[indice_bucket]++] = arr[i];
     }
 }
+
 
 void ordenarBaldes(int **buckets, int *indices, int num_buckets) {
     int i;
@@ -46,10 +55,9 @@ void mesclarBaldesOrdenados(int **buckets, int *indices, int num_buckets, int *a
     }
 }
 
-void ordenacaoHibrida(int arr[], int n, int tam_bucket) {
+void BucketQuick(int arr[], int n, int tam_bucket) {
     int valor_maximo = arr[0];
-    int i;
-    for (i = 1; i < n; i++) {
+    for (int i = 1; i < n; i++) {
         if (arr[i] > valor_maximo) {
             valor_maximo = arr[i];
         }
@@ -70,22 +78,22 @@ void ordenacaoHibrida(int arr[], int n, int tam_bucket) {
         exit(1);
     }
 
-    for (i = 0; i < num_buckets; i++) {
+    for (int i = 0; i < num_buckets; i++) {
         buckets[i] = (int *)malloc(tam_bucket * sizeof(int));
         if (buckets[i] == NULL) {
             printf("Erro ao alocar memoria para um balde.\n");
-            liberarMemoriaBaldes(buckets, indices);
+            liberarMemoriaBaldes(buckets, indices, num_buckets);
             exit(1);
         }
     }
 
-    distribuirElementosNosBaldes(buckets, indices, arr, n, tam_bucket);
+    distribuirElementosNosBaldes(buckets, indices, arr, n, tam_bucket, num_buckets);
     ordenarBaldes(buckets, indices, num_buckets);
     mesclarBaldesOrdenados(buckets, indices, num_buckets, arr);
 
-    free(buckets);
-    free(indices);
+    liberarMemoriaBaldes(buckets, indices, num_buckets);
 }
+
 
 void gerarArquivo(const char *nomeArquivo, int tamanho) {
     int i;
@@ -210,7 +218,7 @@ void menu() {
                 }
                 printf("\n");
                 clock_t inicio = clock();
-                ordenacaoHibrida(arr, tam_array, tam_bucket);
+                BucketQuick(arr, tam_array, tam_bucket);
                 clock_t fim = clock();
 
                 printf("\nArray organizado:\n");
@@ -251,7 +259,7 @@ void menu() {
                 int tamanho = lerArquivo(nomeArquivoDesorganizado, &arr);
 
                 clock_t inicio = clock();
-                ordenacaoHibrida(arr, tamanho, tam_bucket);
+                BucketQuick(arr, tamanho, tam_bucket);
                 clock_t fim = clock();
 
                 salvarArquivo(nomeArquivoOrdenado, arr, tamanho);
@@ -270,6 +278,11 @@ void menu() {
                 printf("Opcao invalida. Tente novamente.\n");
         }
     } while (opcao != 3);
+}
+
+int main(){
+    menu();
+    return 0;
 }
 
                
