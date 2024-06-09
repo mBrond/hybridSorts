@@ -1,7 +1,9 @@
 #include "BucketQuick.h"
+#include "Utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 
 #define ELEMENTOS_POR_LINHA 15
 

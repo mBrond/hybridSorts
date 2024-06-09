@@ -1,5 +1,5 @@
-#ifndef ORDENACAO_H
-#define ORDENACAO_H
+#ifndef BUCKETQUICK_H
+#define BUCKETQUICK_H
 
 int comparar(const void *a, const void *b);
 void ordenarBalde(int arr[], int tamanho);
