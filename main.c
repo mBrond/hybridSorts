@@ -9,9 +9,10 @@ void menu() {
 
     do {
         printf("\nAlgoritmos Hibridos:\n");
+        printf("0. Sair\n");
         printf("1. BubbleSort com MergeSort\n");
         printf("2. BucketSort com QuickSort\n");
-        printf("3. Sair\n");
+        printf("3. Gerar arquivo com inteiros\n");
         printf("Opcao: ");
         scanf("%d", &opcao);
 
@@ -23,11 +24,12 @@ void menu() {
                 menuBucketQuick();
                 break;
             case 3:
+            	interfaceGerarArquivo("dados_desorganizados.txt");
                 break;
             default:
                 printf("Opcao invalida. Tente novamente.\n");
         }
-    } while (opcao != 3);
+    } while (opcao != 0);
 }
 
 int main(){

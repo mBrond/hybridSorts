@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include<stdlib.h>
+#include<time.h>
 
-#include"BubbleMerge.h"
+//#include"BubbleMerge.h"
 #include"Utils.h"
 
 #define MAX_BUBBLE 50
 
 // Funcao para realizar Bubble Sort em uma sublista
-void bubbleSort(int arr[], int left, int right) {
+void bubbleSort(int arr[], int esq, int dir){
 	int i, j;
-    for (i = left; i < right; i++) { //itera todos os elementos definidos na porcao do vetor
-        for (j = left; j < right - (i - left); j++) { // vai ateh o ultimo elemento nao ordenado. 
+    for(i = esq; i < dir; i++){ //itera todos os elementos definidos na porcao do vetor
+        for(j = esq; j < dir - (i - esq); j++){ // vai ateh o ultimo elemento nao ordenado. 
             if (arr[j] > arr[j + 1]) {
                 int temp = arr[j];
                 arr[j] = arr[j + 1];
@@ -21,68 +22,102 @@ void bubbleSort(int arr[], int left, int right) {
 }
 
 // Funcao para mesclar duas sublistas ordenadas
-void merge(int arr[], int left, int mid, int right) {
-    int index1 = mid - left + 1;
-    int index2 = right - mid;
+void merge(int arr[], int esq, int mid, int dir){
+    int indexEsq = mid - esq + 1;
+    int indexDir = dir - mid;
 	int i;
-    int L[index1], R[index2];
-    
+    int ArrayEsq[indexEsq], ArrayDir[indexDir];
 
-    for (i = 0; i < index1; i++) {
-        L[i] = arr[left + i];
+    for (i = 0; i < indexEsq; i++) {
+        ArrayEsq[i] = arr[esq + i];
     }
-    for (i = 0; i < index2; i++) {
-        R[i] = arr[mid + 1 + i];
+    for (i = 0; i < indexDir; i++) {
+        ArrayDir[i] = arr[mid + 1 + i];
     }
 
-	int j = 0, k = left;
+	int j = 0, k = esq;
 
-    while (i < index1 && j < index2) {
-        if (L[i] <= R[j]) {
-            arr[k] = L[i];
+    while(i < indexEsq && j < indexDir){
+        if(ArrayEsq[i] <= ArrayDir[j]){
+            arr[k] = ArrayEsq[i];
             i++;
         } else {
-            arr[k] = R[j];
+            arr[k] = ArrayDir[j];
             j++;
         }
         k++;
     }
 
-    while (i < index1) {
-        arr[k] = L[i];
-        i++;
-        k++;
-    }
-
-    while (j < index2) {
-        arr[k] = R[j];
-        j++;
-        k++;
-    }
+//    while (i < indexL) {
+//        arr[k] = ArrayEsq[i];
+//        i++;
+//        k++;
+//    }
+//
+//    while (j < indexR) {
+//        arr[k] = ArrayDir[j];
+//        j++;
+//        k++;
+//    }
 }
 
 // Funcao para realizar o Hybrid Merge Sort
-void hybridMergeSort(int arr[], int left, int right) {
-    if (right - left + 1 <= MAX_BUBBLE) { //apenas chama a ordenacao do Bubble se o array eh menor/igual ao 
-        bubbleSort(arr, left, right);
+void mergeBubble(int arr[], int esq, int dir) {
+    if (dir - esq + 1 <= MAX_BUBBLE) { //apenas chama a ordenacao do Bubble se o array eh menor/igual ao 
+        bubbleSort(arr, esq, dir);
     } else {
-        if (left < right) {
-            int mid = left + (right - left) / 2;
-            hybridMergeSort(arr, left, mid); //esquerda >< meio
-            hybridMergeSort(arr, mid + 1, right); // meio+1 >< direita
-            merge(arr, left, mid, right);
+        if (esq < dir) {
+            int mid = esq + (dir - esq) / 2;
+            mergeBubble(arr, esq, mid); //esquerda >< meio
+            mergeBubble(arr, mid + 1, dir); // meio+1 >< direita
+            merge(arr, esq, mid, dir); //juntar sublistas
         }
     }
 }
 
 // Funcao auxiliar para iniciar a ordenação
-void sort(int arr[], int n) {
-    hybridMergeSort(arr, 0, n - 1);
+//void primeiroSort(int arr[], int n) {
+//    mergeBubble(arr, 0, n - 1);
+//}
+
+void interfaceBMInterna(){
+	int tam;
+	printf("Qual o tamanho do array?");
+	scanf("%d", &tam);
+	
+	int arr[tam];
+	dadosAleatorios(arr, tam);
+	imprimirArray(arr, tam);
+
+	double tempoTotal;
+	clock_t tComeco = clock(), tFinal;	
+	
+	mergeBubble(arr, 0, tam-1);
+	
+	tFinal =  clock();
+	tempoTotal = (double) (tFinal - tComeco) / CLOCKS_PER_SEC;
+	imprimirArray(arr, tam);
+	printf("Tempo final %lf\n", tempoTotal);
 }
 
-
 void interfaceBubbleMerge(){
-	
+	int user = 9;
+	while(user !=3){
+        printf("1. Ordenacao interna\n");
+        printf("2. Ordenacao externa\n");
+        printf("3. Sair\n");
+        printf("Opcao: ");
+        scanf("%d", &user);
+        
+        switch (user){
+        	case 1:
+        		interfaceBMInterna();
+        		break;
+        	case 2:
+        		break;        	
+		}
+
+	}
 }
 
 // Exemplo de uso

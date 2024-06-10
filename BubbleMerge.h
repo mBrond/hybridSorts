@@ -3,10 +3,10 @@
 
 #include"BubbleMerge.c"
 
-void bubbleSort(int arr[], int left, int right);
-void merge(int arr[], int left, int mid, int right);
-void hybridMergeSort(int arr[], int left, int right);
-void sort(int arr[], int n);
+void bubbleSort(int arr[], int esq, int dir);
+void merge(int arr[], int esq, int mid, int dir);
+void mergeBubble(int arr[], int left, int right);
+void primeiroSort(int arr[], int n);
 void interfaceBubbleMerge();
 
 #endif
