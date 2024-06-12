@@ -28,6 +28,10 @@ void interfaceGerarArquivo(const char *nomeArquivo){
 	printf("Quantos numeros?");
 	int tam;
 	scanf("%d", &tam);
+	if (tam <= 0) {
+        printf("Tamanho invalido do array.\n");
+        return;
+    }
 	gerarArquivo(nomeArquivo, tam);
 }
 

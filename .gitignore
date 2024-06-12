@@ -2,3 +2,5 @@ main.exe
 dados_desorganizados.txt
 dados_ordenados.txt
 *.gch
+*.docx
+*.docx#

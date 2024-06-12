@@ -143,17 +143,10 @@ void ordenacaoInterna() {
 }
 
 void ordenacaoExterna() {
-    int tam_array, tam_bucket;
+    int tam_bucket;
     const char *nomeArquivoDesorganizado = "dados_desorganizados.txt";
     const char *nomeArquivoOrdenado = "dados_ordenados.txt";
 
-    printf("Digite o tamanho do array: ");
-    scanf("%d", &tam_array);
-
-    if (tam_array <= 0) {
-        printf("Tamanho invalido do array.\n");
-        return;
-    }
 
     printf("Digite o tamanho do balde: ");
     scanf("%d", &tam_bucket);
@@ -162,8 +155,6 @@ void ordenacaoExterna() {
         printf("Tamanho invalido do balde.\n");
         return;
     }
-
-    gerarArquivo(nomeArquivoDesorganizado, tam_array);
 
     int *arr;
     int tamanho = lerArquivo(nomeArquivoDesorganizado, &arr);
@@ -185,6 +176,7 @@ void menuBucketQuick() {
     int opcao;
 
     do {
+    	printf("\nBucketQuick\n");
         printf("1. Ordenacao interna\n");
         printf("2. Ordenacao externa\n");
         printf("3. Sair\n");

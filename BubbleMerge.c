@@ -105,19 +105,9 @@ void interfaceBMInterna(){
 
 void interfaceBMExterna(){
 	int user, tam;
-	do{
-		printf("\nRecriar arquivo externo? 0-Nao, 1-Sim\n");
-		scanf("%d", &user);
-	}while(user!=1 && user!=0);
-	
-	printf("\nQuantos inteiros?");
-	scanf("%d", &tam);
-	if(user==1){
-		gerarArquivo("dados_desorganizados.txt", tam);
-	}
 	
 	int *arr;
-    int tamanho = lerArquivo("dados_desorganizados.txt", &arr);
+    tam = lerArquivo("dados_desorganizados.txt", &arr);
 
 	double tempoTotal;
 	clock_t tComeco = clock(), tFinal;	
@@ -133,6 +123,7 @@ void interfaceBMExterna(){
 void interfaceBubbleMerge(){
 	int user = 9;
 	while(user !=3){
+		printf("\nBubbleMerge\n");
         printf("1. Ordenacao interna\n");
         printf("2. Ordenacao externa\n");
         printf("3. Sair\n");

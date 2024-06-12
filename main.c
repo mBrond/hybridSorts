@@ -12,6 +12,7 @@ void menu() {
         printf("0. Sair\n");
         printf("1. BucketSort com QuickSort\n");
         printf("2. BubbleSort com MergeSort\n");
+        printf("3. Criar arquivo de inteiros\n");
         printf("Opcao: ");
         scanf("%d", &opcao);
 
@@ -22,6 +23,9 @@ void menu() {
             case 2:
             	interfaceBubbleMerge();
                 break;
+            case 3:
+            	interfaceGerarArquivo("dados_desorganizados.txt");
+            	break;
             default:
                 printf("Opcao invalida. Tente novamente.\n");
         }
