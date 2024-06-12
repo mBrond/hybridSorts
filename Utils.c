@@ -84,6 +84,7 @@ void salvarArquivo(const char *nomeArquivo, int arr[], int tamanho) {
 /* Funcao para preencher um array com numeros inteiros aleatorios*/
 void dadosAleatorios(int arr[], int tamanho) {
     int i;
+    srand(time(NULL));
 	for (i = 0; i < tamanho; i++) {
         arr[i] = rand() % 100; 
     }
